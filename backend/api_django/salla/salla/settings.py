@@ -52,6 +52,11 @@ REST_FRAMEWORK = {
     )
 }
 
+from datetime import timedelta
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -155,3 +160,9 @@ EMAIL_HOST_PASSWORD = os.getenv('SALLA_DJANGO_API_PASSWORD')
 
 
 BASE_URL_FOR_EMAIL_VERFICATION_CUSTOM = "http://127.0.0.1:8000/accountallusers/email-verification/"
+
+EMP_ALL_PERMISSIONS = 1
+EMP_NRMLSLR_VIEW = 3
+EMP_NRMLSLR_ACTIVATE_SLR = 6
+EMP_BAN_USER = 10
+

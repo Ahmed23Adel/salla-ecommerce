@@ -1,6 +1,8 @@
-from .models import GenericUserData
+from .models import GenericUserData, NormalSellerDetails
+from .models import *
 from rest_framework import serializers
 from password_strength import PasswordPolicy
+from datetime import date
 
 class GenericUserSerializer(serializers.ModelSerializer):
 
@@ -55,7 +57,65 @@ class UserEmailActivation(serializers.ModelSerializer):
         fields = ['is_email_verified']
     
 
+class UserBanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserBan
+        fields = ['user_id', 'from_date','to_date']
+
+
+class GenericUserRetrievalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GenericUserData    
+        fields = [ "email", "first_name", 'last_name', 'is_seller', 'is_normal', 'is_emp', 'is_male', 'bdate']
+
+class AccountNormalSerializer(serializers.ModelSerializer):
+    user = GenericUserRetrievalSerializer(many=False)
+    is_banned_now = serializers.BooleanField(
+        read_only=True)
+    class Meta:
+        model = NormalSellerDetails
+        fields = ['mobileauthenticationenabled',
+                'emailauthenticationenabled',
+                'mobilephone',
+                'profilepiclink',
+                'user',
+                'is_banned_now'
+                ]
+
+    # def get_age(self, instance):
+    #     if instance.birthdate:
+    #         today =date.today()
+    #         one_or_zero = ((today.month, today.day) < (instance.birthdate.month, instance.birthdate.day))
+    #         year_difference = today.year - instance.birthdate.year
+    #         age = year_difference - one_or_zero
+    #         return age
+    #     return 0
     
+from rest_framework.fields import CurrentUserDefault
+class AccountNormalInsertSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NormalSellerDetails
+        fields = [
+                'mobileauthenticationenabled',
+                'emailauthenticationenabled',
+                'mobilephone',
+                'profilepiclink',
+                'user',
+        ]
+
+
+
+class AccountNormalUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NormalSellerDetails
+        fields = [
+                'mobileauthenticationenabled',
+                'emailauthenticationenabled',
+                'mobilephone',
+                'profilepiclink',
+        ]
+
+
     
 
 

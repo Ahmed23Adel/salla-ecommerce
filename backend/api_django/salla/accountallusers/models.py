@@ -66,7 +66,7 @@ class EmailConfirmationToken(models.Model):
 
 
 class NormalSellerDetails(models.Model):
-    userid = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True,db_column='UserID', unique=True)  # from table user.
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True,db_column='UserID', unique=True)  # from table user.
     mobileauthenticationenabled = models.IntegerField(db_column='MobileAuthenticationEnabled', default=0)  # Field name made lowercase.
     emailauthenticationenabled = models.IntegerField(db_column='EmailAuthenticationEnabled', default=0)  # Field name made lowercase.
     mobilephone = models.CharField(db_column='MobilePhone', max_length=20, blank=True, null=True)  # Field name made lowercase.
@@ -85,4 +85,14 @@ class Permissions(models.Model):
         managed = True
         db_table = 'permissions'
         unique_together = (('empid', 'permissionkey'),)
+
+
+class UserBan(models.Model):
+    user_id =  models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True,db_column='UserID', unique=True)  # from table user.
+    from_date = models.DateField(null=False)
+    to_date = models.DateField(null=False)
+    class Meta:
+        managed = True
+        db_table = 'userban'
+        unique_together = (('user_id', 'from_date'),)
 

@@ -23,8 +23,10 @@ def refresh_token():
         data = json.load(json_file)
         cred =  {"refresh": data['refresh']}
     req_resp = requests.post(endpoint, json=cred)
+    if req_resp.status_code == 401:
+        return 401
     cred['access'] = req_resp.json()['access']
-    print(cred)
+    #print(cred)
     cred_path: pathlib.Path = pathlib.Path("creds.json")
     if cred_path:
         cred_path.write_text(json.dumps(cred))
@@ -41,18 +43,19 @@ def verify_token():
             "token": data['access']
             # <Response [401]> {'detail': 'Token is invalid or expired', 'code': 'token_not_valid'}
         }
-    print(cred)
+    #print(cred)
     req_resp = requests.post(endpoint, json=cred)
-    print("verify_token", req_resp, req_resp.json())
-    #return req_resp.status_code
+    #print("verify_token", req_resp, req_resp.json())
+    return req_resp.status_code
 
 def tokin_auth(email = None, password = None):
-    print("Try verify")
-    if verify_token() == 401:
+    #print("Try verify")
+    #if verify_token() == 401:
         print("Try refresh")
         if refresh_token() == 401:
             print("Try create")
             create_token(email, password)
+
 
 
 refresh_token()

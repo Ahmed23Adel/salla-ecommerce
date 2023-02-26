@@ -17,6 +17,12 @@ urlpatterns = [
         path('refresh/', TokenRefreshView.as_view(), name='token_refresh'),
         path('verify/', TokenVerifyView.as_view(), name='token_refresh'),
         path('email-verification/<str:id>', VerfiyUserAccount.as_view()),
+        path('ban/', UserBanView.as_view()),
+        path('normal/', NormalAccountList.as_view()),
+        path('normal/finish-registration/', NormalAccountInsert.as_view()),
+        path('normal/finish-registrationn/', NormalAccountUpdate.as_view())
+
+        
 ]
 
     
