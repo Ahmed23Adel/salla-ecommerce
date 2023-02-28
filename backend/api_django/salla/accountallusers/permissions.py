@@ -49,7 +49,7 @@ class IsEmpBan(cusomt_permission):
         return False
     
 
-class IsInsertNormalSelf(cusomt_permission):
+class IsInsertUpdateNormalSelf(cusomt_permission):
     def has_permission(self, request, view):
         if request.user.is_authenticated:
             if request.method == "POST":
@@ -64,6 +64,25 @@ class IsInsertNormalSelf(cusomt_permission):
 
     def has_object_permission(self, request, view, obj):
         if request.user.is_normal : 
+            return True
+        return False
+    
+
+class IsInsertUpdateSellerSelf(cusomt_permission):
+    def has_permission(self, request, view):
+        if request.user.is_authenticated:
+            if request.method == "POST":
+                if request.user.is_seller and str(request.user.id).replace("-", "")== request.data.get('user'):            
+                    return True
+            elif request.method == "PUT": 
+                if request.user.is_seller :   
+                    return True
+
+        return False
+        
+
+    def has_object_permission(self, request, view, obj):
+        if request.user.is_seller : 
             return True
         return False
     

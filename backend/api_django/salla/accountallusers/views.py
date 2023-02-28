@@ -71,21 +71,50 @@ class NormalAccountList(generics.ListCreateAPIView):
                     )
                 ).filter(user__is_normal=True)
         return queryset
+    
+
+class SellerAccountList(generics.ListCreateAPIView):
+    serializer_class = AccountNormalSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsEmpReadAllUsersOrPost]
+
+    def get_queryset(self):
+        #queryset = NormalSellerDetails.objects.all().select_related('userid')
+        datetime_now = str(date.today())
+        queryset =  NormalSellerDetails.objects.select_related(
+                    'user', 'user__userban').all().annotate(
+                    is_banned_now=Case(
+                        When(user__userban__isnull=False ,user__userban__to_date__gt=datetime_now, then=True),
+                        default=False,
+                        output_field=BooleanField()
+                    )
+                ).filter(user__is_seller=True)
+        return queryset
+
+
 
 
 class NormalAccountInsert(generics.CreateAPIView):
     queryset = NormalSellerDetails.objects.all()
-    serializer_class= AccountNormalInsertSerializer
+    serializer_class= AccountNrmlSlrInsertSerializer
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsInsertNormalSelf]
+    permission_classes = [IsInsertUpdateNormalSelf]
     lookup_field = 'pk'
+
+class SellerAccountInsert(generics.CreateAPIView):
+    queryset = NormalSellerDetails.objects.all()
+    serializer_class= AccountNrmlSlrInsertSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsInsertUpdateSellerSelf]
+    lookup_field = 'pk'
+
 
 
 class NormalAccountUpdate(generics.UpdateAPIView):
     queryset = NormalSellerDetails.objects.all()
-    serializer_class= AccountNormalUpdateSerializer
+    serializer_class= AccountNrmlSlrUpdateSerializer
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsInsertNormalSelf]
+    permission_classes = [IsInsertUpdateNormalSelf]
 
 
     def get_object(self):
@@ -97,13 +126,22 @@ class NormalAccountUpdate(generics.UpdateAPIView):
         obj = queryset.get(pk=self.request.user.id)
         self.check_object_permissions(self.request, obj)
         return obj
+    
+
+class SellerAccountUpdate(generics.UpdateAPIView):
+    queryset = NormalSellerDetails.objects.all()
+    serializer_class= AccountNrmlSlrUpdateSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsInsertUpdateSellerSelf]
 
 
-
-
-        
-
-
-
-
+    def get_object(self):
+        """
+        I take the id of what I'm looking for from request.user
+        So user can update the user who he is signed in only        
+        """
+        queryset = self.filter_queryset(self.get_queryset())
+        obj = queryset.get(pk=self.request.user.id)
+        self.check_object_permissions(self.request, obj)
+        return obj
 

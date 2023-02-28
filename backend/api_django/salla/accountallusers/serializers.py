@@ -69,6 +69,7 @@ class GenericUserRetrievalSerializer(serializers.ModelSerializer):
         fields = [ "email", "first_name", 'last_name', 'is_seller', 'is_normal', 'is_emp', 'is_male', 'bdate']
 
 class AccountNormalSerializer(serializers.ModelSerializer):
+    # for list update
     user = GenericUserRetrievalSerializer(many=False)
     is_banned_now = serializers.BooleanField(
         read_only=True)
@@ -82,17 +83,8 @@ class AccountNormalSerializer(serializers.ModelSerializer):
                 'is_banned_now'
                 ]
 
-    # def get_age(self, instance):
-    #     if instance.birthdate:
-    #         today =date.today()
-    #         one_or_zero = ((today.month, today.day) < (instance.birthdate.month, instance.birthdate.day))
-    #         year_difference = today.year - instance.birthdate.year
-    #         age = year_difference - one_or_zero
-    #         return age
-    #     return 0
     
-from rest_framework.fields import CurrentUserDefault
-class AccountNormalInsertSerializer(serializers.ModelSerializer):
+class AccountNrmlSlrInsertSerializer(serializers.ModelSerializer):
     class Meta:
         model = NormalSellerDetails
         fields = [
@@ -105,7 +97,7 @@ class AccountNormalInsertSerializer(serializers.ModelSerializer):
 
 
 
-class AccountNormalUpdateSerializer(serializers.ModelSerializer):
+class AccountNrmlSlrUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = NormalSellerDetails
         fields = [
@@ -117,6 +109,3 @@ class AccountNormalUpdateSerializer(serializers.ModelSerializer):
 
 
     
-
-
-
