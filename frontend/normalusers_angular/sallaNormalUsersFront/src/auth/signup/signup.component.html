@@ -26,67 +26,134 @@
 
     <div class="singup-block form-group">
         <form [formGroup]="registrationForm">
-            <div>
-                {{registrationForm.value|json}}
+
+            <div class="div-col">
+
             
-            </div>
-            <div>
-                <div>
-                    <h4 > Welcome to Salla👋</h4>
-                    
-                </div>
-                <div>
-                    <p > Signup</p>
-                </div>
-
-                
-                <div class="form-group">
-                    <label>First name</label>
-                    <input type="text" class="form-control" formControlName="firstName">
-
-                    <label>Last name</label>
-                    <input type="text" class="form-control" formControlName="lastName">
-                </div>
-
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" class="form-control" required formControlName="email">
-
-                    <label>2 step verification using Email?</label>
-                    <input type="checkbox" class="form-control" style="width: auto;" formControlName="TwoStepVerficationEmail">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" class="form-control"  formControlName="password">
-
-                    <label>Confirm password</label>
-                    <input type="password" class="form-control" formControlName="confirmPassword">
-                </div>
-
-                <div class="form-group">
-                    <label>Mobile phone</label>
-                    <input type="tel" class="form-control" formControlName="mobilePhone">
-
-                    <label>2 step verification using Phone?</label>
-                    <input type="checkbox" class="form-control" style="width: auto;" formControlName="TwoStepVerficationMobile">
-                </div>
-
-                <div class="form-group">
-                    <label>Birth date</label>
-                    <input type="date" class="form-control" required formControlName="birthDate">
-
-                    <!-- <label>2 step verification using Phone?</label>
-                    <input type="checkbox" class="form-control"> -->
-                </div>
-                <div class="form-group">
-                    <div style="width: 100%; display: flex; justify-content: center;">
-                        <input type="submit" class="form-control btn btn-primary" style="width: auto;">
+                <!-- {{registrationForm.value|json}} -->
+                <h4 > Welcome to Salla👋</h4>
+                <p > (Signup)</p>
+                <!-- First and last name -->
+                <div class="div-row">
+                    <div class="div-col">
+                        <div class="div-row">
+                            <label>First name</label>
+                            <input [class.is-invalid] = "registrationForm.get('firstName')?.invalid && registrationForm.get('firstName')?.touched" type="text" class="form-control" formControlName="firstName" />
+                        </div>
+                        <div *ngIf="firstName?.invalid && firstName?.touched">
+                            <small *ngIf="firstName?.errors?.['required']" class="text-danger">This field is required</small>
+                            <small *ngIf="firstName?.errors?.['minlength']" class="text-danger">First name must have at least 5 letters.</small>
+                        </div>
+                        
                     </div>
-                    
+
+                    <div class="div-col">
+                        <div class="div-row">
+                            <label>Last name</label>
+                            <input [class.is-invalid] = "registrationForm.get('lastName')?.invalid && registrationForm.get('lastName')?.touched" type="text" class="form-control" formControlName="lastName">
+                        </div>
+                        <div *ngIf="lastName?.invalid && lastName?.touched">
+                            <small *ngIf="lastName?.errors?.['required']" class="text-danger">This field is required</small>
+                            <small *ngIf="lastName?.errors?.['minlength']" class="text-danger">First name must have at least 5 letters.</small>
+                        </div>
+                    </div>
+
+                </div>
+                <!--  email and verificatoin-->
+                <div class="div-row">
+                    <div class="div-col">
+                        <div class="div-row">
+                            <label>Email</label>
+                            <input [class.is-invalid] = "registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched" type="email" class="form-control" required formControlName="email">
+                        </div>
+                        <div *ngIf="email?.invalid && email?.touched">
+                            <small *ngIf="email?.errors?.['required']" class="text-danger">This field is required</small>
+                            
+                        </div>
+                    </div>
+
+                    <div class="div-col">
+                        <div class="div-row">
+                            <label>2 step verification using Email?</label>
+                            <input type="checkbox" class="form-control form-check-input" style="width: auto;" formControlName="TwoStepVerficationEmail">
+                        </div>
+                        <!-- <small class="text-danger">This field is required</small> -->
+                    </div>
+
+                </div>
+                <!-- password -->
+                <div class="div-row">
+                    <div class="div-col">
+                        <div class="div-row">
+                            <label>Password</label>
+                            <input [class.is-invalid] = "registrationForm.get('password')?.invalid && registrationForm.get('password')?.touched" type="password" class="form-control"  formControlName="password">
+                        </div>
+                        <div *ngIf="password?.invalid && password?.touched">
+                            <small *ngIf="password?.errors?.['required']" class="text-danger">This field is required</small>
+                        </div>
+                        <small *ngIf="registrationForm.errors?.['mismatch']" class="text-danger">Passwords do not match</small>
+                        
+                    </div>
+
+                    <div class="div-col">
+                        <div class="div-row">
+                            <label>Confirm password</label>
+                            <input [class.is-invalid] = "registrationForm.get('confirmPassword')?.invalid && registrationForm.get('confirmPassword')?.touched" type="password" class="form-control" formControlName="confirmPassword">
+                        </div>
+                        <div *ngIf="confirmPassword?.invalid && confirmPassword?.touched">
+                            <small *ngIf="confirmPassword?.errors?.['required']" class="text-danger">This field is required</small>
+                        </div>
+                        <small *ngIf="registrationForm.errors?.['mismatch']" class="text-danger">Passwords do not match</small>
+                    </div>
+
                 </div>
 
+                <!-- Mobile phone and ver -->
+                <div class="div-row">
+                    <div class="div-col">
+                        <div class="div-row">
+                            <label>Mobile phone</label>
+                            <input [class.is-invalid] = "registrationForm.errors?.['phonerequired']" type="tel" class="form-control" formControlName="mobilePhone">
+                        </div>
+                        <small *ngIf="registrationForm.errors?.['phonerequired']" class="text-danger">Phone is required for 2FA</small>
+                    </div>
+
+                    <div class="div-col">
+                        <div class="div-row">
+                            <label>2 step verification using Phone?</label>
+                            <input type="checkbox" class="form-control form-check-input" style="width: auto;" formControlName="TwoStepVerficationMobile">
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Bdate -->
+                <div class="div-row">
+                    <div class="div-col">
+                        <div class="div-row">
+                            <label>Birth date</label>
+                            <input [class.is-invalid] = "registrationForm.get('birthDate')?.invalid && registrationForm.get('birthDate')?.touched" type="date" class="form-control" formControlName="birthDate">
+                        </div>
+                        <div *ngIf="birthDate?.invalid && birthDate?.touched">
+                            <small *ngIf="birthDate?.errors?.['required']" class="text-danger">This field is required</small>
+                        </div>
+                    </div>
+
+                    <!-- <div class="div-col">
+                        <div class="div-row">
+                            <label>2 step verification using Phone?</label>
+                            <input type="checkbox" class="form-control" style="width: auto;" formControlName="TwoStepVerficationMobile">
+                        </div>
+                        <small class="text-danger">This field is required</small>
+                    </div> -->
+
+                </div>
                 
+                <input type="submit" class="form-control btn btn-primary" style="width: auto;">
+
             </div>
+
+
         </form>
         
     </div>
