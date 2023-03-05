@@ -1,0 +1,100 @@
+
+<div class="slider">
+    <figure>
+        <div class="slide">
+            <img src="/assets/singnup/signup-background-1.jpg" alt="">"
+        </div>
+        <div class="slide">
+            <img src="/assets/singnup/signup-background-2.jpg" alt="">"
+        </div>
+        <div class="slide">
+            <img src="/assets/singnup/signup-background-3.jpg" alt="">"
+        </div>
+        <div class="slide">
+            <img src="/assets/singnup/signup-background-4.jpg" alt="">"
+        </div>
+        <div class="slide">
+            <img src="/assets/singnup/signup-background-5.jpg" alt="">"
+        </div>
+        <div class="slide">
+            <img src="/assets/singnup/signup-background-6.jpg" alt="">"
+        </div>
+        <div class="slide">
+            <img src="/assets/singnup/signup-background-7.jpg" alt="">"
+        </div>
+    </figure>
+
+    <div class="singup-block form-group">
+        <form [formGroup]="registrationForm">
+            <div>
+                {{registrationForm.value|json}}
+            
+            </div>
+            <div>
+                <div>
+                    <h4 > Welcome to Salla👋</h4>
+                    
+                </div>
+                <div>
+                    <p > Signup</p>
+                </div>
+
+                
+                <div class="form-group">
+                    <label>First name</label>
+                    <input type="text" class="form-control" formControlName="firstName">
+
+                    <label>Last name</label>
+                    <input type="text" class="form-control" formControlName="lastName">
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" required formControlName="email">
+
+                    <label>2 step verification using Email?</label>
+                    <input type="checkbox" class="form-control" style="width: auto;" formControlName="TwoStepVerficationEmail">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control"  formControlName="password">
+
+                    <label>Confirm password</label>
+                    <input type="password" class="form-control" formControlName="confirmPassword">
+                </div>
+
+                <div class="form-group">
+                    <label>Mobile phone</label>
+                    <input type="tel" class="form-control" formControlName="mobilePhone">
+
+                    <label>2 step verification using Phone?</label>
+                    <input type="checkbox" class="form-control" style="width: auto;" formControlName="TwoStepVerficationMobile">
+                </div>
+
+                <div class="form-group">
+                    <label>Birth date</label>
+                    <input type="date" class="form-control" required formControlName="birthDate">
+
+                    <!-- <label>2 step verification using Phone?</label>
+                    <input type="checkbox" class="form-control"> -->
+                </div>
+                <div class="form-group">
+                    <div style="width: 100%; display: flex; justify-content: center;">
+                        <input type="submit" class="form-control btn btn-primary" style="width: auto;">
+                    </div>
+                    
+                </div>
+
+                
+            </div>
+        </form>
+        
+    </div>
+</div>
+
+
+
+
+
+
+
