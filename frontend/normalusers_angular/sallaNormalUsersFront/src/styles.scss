@@ -2,3 +2,84 @@
 
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
+
+@keyframes curtains-down {
+    from {
+        margin-top: -40%;
+    }
+
+    to {
+        margin-top: -0%;
+    }
+}
+
+
+@keyframes curtains-up {
+    from {
+        margin-bottom: -40%;
+    }
+
+    to {
+        margin-bottom: -0%;
+    }
+}
+
+
+.div-row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.div-col {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.custom-shape-divider-top-1678123074 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    animation-name: curtains-down;
+    animation-duration: 3s;
+}
+
+.custom-shape-divider-top-1678123074 svg {
+    position: relative;
+    display: block;
+    width: calc(131% + 1.3px);
+    height: 500px;
+}
+
+.custom-shape-divider-top-1678123074 .shape-fill {
+    fill: #681F79;
+}
+
+.custom-shape-divider-bottom-1678123028 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+    animation-name: curtains-up;
+    animation-duration: 3s;
+}
+
+.custom-shape-divider-bottom-1678123028 svg {
+    position: relative;
+    display: block;
+    width: calc(108% + 1.3px);
+    height: 500px;
+}
+
+.custom-shape-divider-bottom-1678123028 .shape-fill {
+    fill: #FFCB1D;
+}
+
+
