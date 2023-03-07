@@ -82,4 +82,27 @@
     fill: #FFCB1D;
 }
 
+.container-custom{
+    position: relative;
+    width: 100%;
+
+}
+
+.container-background{
+    position:fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    left: 0;
+}
+
+.container-foreground{
+    position:relative;
+    z-index: 2;
+    margin-top: 10%;
+}
+
 
